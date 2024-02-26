@@ -4,14 +4,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.arsen.ui.theme.ArsenTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,5 +12,16 @@ class MainActivity : ComponentActivity() {
             setContentView(R.layout.activity_main)
         }
     }
-
+    fun click1(view: View) {
+        var displaytext : TextView = findViewById(R.id.textView)
+        displaytext.setText("Dzien dobry")
+    }
+    fun click2(view: View) {
+        var displaytext : TextView = findViewById(R.id.textView)
+        displaytext.setText("Eryk Sabiniewicz")
+    }
+    fun click3(view: View) {
+        var displaytext : TextView = findViewById(R.id.textView)
+        displaytext.setText("Pozdrawiam")
+    }
 }
