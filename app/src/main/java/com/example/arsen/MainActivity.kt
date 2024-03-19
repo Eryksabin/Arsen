@@ -4,24 +4,35 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import android.widget.Button
 
 class MainActivity : ComponentActivity() {
+    private lateinit var textView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             setContentView(R.layout.activity_main)
         }
+        textView = findViewById(R.id.textView)
+
+        val buttons = listOf(
+            R.id.one, R.id.two, R.id.three,
+            R.id.four, R.id.five, R.id.six,
+            R.id.seven, R.id.eight, R.id.nine, R.id.zero,
+            R.id.plus, R.id.minus, R.id.multi, R.id.divide, R.id.modulo, R.id.coma)
+
+        buttons.forEach { buttonId ->
+            findViewById<Button>(buttonId).setOnClickListener { buttonClicked(it) }
+        }
+
+        findViewById<Button>(R.id.C).setOnClickListener { clearTextView() }
     }
-    fun click1(view: View) {
-        var displaytext : TextView = findViewById(R.id.textView)
-        displaytext.setText("Dzien dobry")
+    private fun buttonClicked(view: View) {
+        val button = view as Button
+        textView.text = "${textView.text}${button.text}"
     }
-    fun click2(view: View) {
-        var displaytext : TextView = findViewById(R.id.textView)
-        displaytext.setText("Eryk Sabiniewicz")
-    }
-    fun click3(view: View) {
-        var displaytext : TextView = findViewById(R.id.textView)
-        displaytext.setText("Pozdrawiam")
+
+    private fun clearTextView() {
+        textView.text = ""
     }
 }
