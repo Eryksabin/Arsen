@@ -50,23 +50,35 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun evaluateExpression(expression: String): Double {
-        // This method can evaluate basic arithmetic expressions
+        // This method can evaluate basic arithmetic expressions with negative numbers
         val tokens = expression.split("(?<=[-+*/%])|(?=[-+*/%])".toRegex()).map { it.trim() }
+        if (tokens.isEmpty()) throw IllegalArgumentException("Empty expression")
+
         var result = tokens[0].toDouble()
         var i = 1
+
         while (i < tokens.size) {
-            val operator = tokens[i]
-            val operand = tokens[i + 1].toDouble()
-            result = when (operator) {
-                "+" -> result + operand
-                "-" -> result - operand
-                "*" -> result * operand
-                "/" -> result / operand
-                "%" -> result % operand
-                else -> throw IllegalArgumentException("Unknown operator")
+            if (tokens[i] in listOf("+", "-", "*", "/", "%")) {
+                val operator = tokens[i]
+                val operand = if (i + 1 < tokens.size) tokens[i + 1].toDouble() else throw IllegalArgumentException("Invalid expression")
+                result = when (operator) {
+                    "+" -> result + operand
+                    "-" -> result - operand
+                    "*" -> result * operand
+                    "/" -> result / operand
+                    "%" -> result % operand
+                    else -> throw IllegalArgumentException("Unknown operator")
+                }
+                i += 2
+            } else if (tokens[i] == "-" && (i == 1 || tokens[i - 1] in listOf("+", "-", "*", "/", "%"))) {
+                // Handle negative number
+                result = tokens[i].toDouble() + tokens[i + 1].toDouble()
+                i += 2
+            } else {
+                throw IllegalArgumentException("Invalid expression")
             }
-            i += 2
         }
+
         return result
     }
 }
